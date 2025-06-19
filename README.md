@@ -167,6 +167,8 @@ struct ModalView: View {
 
 In other words, you only have to specify your presentation strategy *once*, after which the same presentation logic will work in the entire app.
 
+For more information, see the [getting-started guide][Getting-Started].
+
 
 
 ## Documentation
