@@ -127,7 +127,9 @@ struct PresentationModifier<Model: Identifiable, AlertActions: View, AlertMessag
                 actions: { alertContent($0).actions() },
                 message: { alertContent($0).message() }
             )
+            #if !os(macOS)
             .fullScreenCover(item: $coverContext.value, content: cover)
+            #endif
             .sheet(item: $sheetContext.value, content: sheet)
     }
 }
