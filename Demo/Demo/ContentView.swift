@@ -11,9 +11,9 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @Environment(AlertContext<DemoModel>.self) private var alert
-    @Environment(FullScreenCoverContext<DemoModel>.self) private var cover
-    @Environment(SheetContext<DemoModel>.self) private var sheet
+    @Environment(AlertContext<DemoModel>.self) var alert
+    @Environment(FullScreenCoverContext<DemoModel>.self) var cover
+    @Environment(SheetContext<DemoModel>.self) var sheet
 
     private let value = DemoModel(id: 1)
 
@@ -23,13 +23,19 @@ struct ContentView: View {
                 Button("Present an alert") {
                     alert.present(value)
                 }
+                #if !os(macOS)
                 Button("Present a full screen cover") {
                     cover.present(value)
                 }
+                #endif
                 Button("Present a sheet") {
                     sheet.present(value)
                 }
             }
+            .focusable()
+            .focusedValue(\.demoModelAlertContext, alert)
+            .focusedValue(\.demoModelCoverContext, cover)
+            .focusedValue(\.demoModelSheetContext, sheet)
             .navigationTitle("Demo")
         }
     }

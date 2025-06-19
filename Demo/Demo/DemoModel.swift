@@ -13,3 +13,10 @@ struct DemoModel: Identifiable {
 
     let id: Int
 }
+
+extension FocusedValues {
+
+    @Entry var demoModelAlertContext: AlertContext<DemoModel>?
+    @Entry var demoModelCoverContext: FullScreenCoverContext<DemoModel>?
+    @Entry var demoModelSheetContext: SheetContext<DemoModel>?
+}

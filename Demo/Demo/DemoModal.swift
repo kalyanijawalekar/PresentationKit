@@ -26,16 +26,23 @@ struct DemoModal: View {
                 Button("Present another alert") {
                     alert.present(value)
                 }
+                #if !os(macOS)
                 Button("Present another full screen cover") {
                     cover.present(value)
                 }
+                #endif
                 Button("Present another sheet") {
                     sheet.present(value)
                 }
             }
+            .frame(minHeight: 250)
+            .focusable()
+            .focusedValue(\.demoModelAlertContext, alert)
+            .focusedValue(\.demoModelCoverContext, cover)
+            .focusedValue(\.demoModelSheetContext, sheet)
             .navigationTitle(title)
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Dismiss", role: .cancel) {
                         dismiss()
                     }

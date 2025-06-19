@@ -11,6 +11,11 @@ import SwiftUI
 
 @main
 struct DemoApp: App {
+
+    @FocusedValue(\.demoModelAlertContext) var alert
+    @FocusedValue(\.demoModelCoverContext) var cover
+    @FocusedValue(\.demoModelSheetContext) var sheet
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -33,6 +38,26 @@ struct DemoApp: App {
                         DemoModal(value: $0, title: "Sheet")
                     }
                 )
+        }
+        .commands {
+            CommandMenu("Demo") {
+                Button("Present alert") {
+                    alert?.present(.init(id: 1))
+                }
+                .disabled(alert == nil)
+
+                #if !os(macOS)
+                Button("Present full screen cover") {
+                    cover?.present(.init(id: 2))
+                }
+                .disabled(cover == nil)
+                #endif
+
+                Button("Present sheet") {
+                    sheet?.present(.init(id: 3))
+                }
+                .disabled(sheet == nil)
+            }
         }
     }
 }

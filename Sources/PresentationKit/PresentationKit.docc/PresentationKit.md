@@ -158,6 +158,58 @@ In other words, you only have to specify your presentation strategy *once*, afte
 
 
 
+## Going Further
+
+### Using contexts in multi-window apps
+
+Multi-windowed apps must be able to keep track of the contexts that belong to the current window, so that the correct contexts can be used to present alerts and modals from global places, like commands and the menu bar.
+
+To handle this with the generic context classes, you have to create type-specific focused values:
+
+```swift
+struct MyModel: Identifiable { ... }
+
+extension FocusedValues {
+
+    @Entry var myModelAlertContext: AlertContext<MyModel>?
+    @Entry var myModelCoverContext: FullScreenCoverContext<MyModel>?
+    @Entry var myModelSheetContext: SheetContext<MyModel>?
+}
+```
+
+You can then register the currently focused context from your current window, using the `.focusedValue(...)` view modifier: 
+
+```swift
+struct ContentView: View {
+
+    @Environment(\.myModelAlertContext) var alert
+    @Environment(\.myModelCoverContext) var cover
+    @Environment(\.myModelSheetContext) var sheet
+
+    var body: some View {
+        VStack {
+            ...
+        }
+        .focusedValue(\.myModelAlertContext, alert)
+        .focusedValue(\.myModelCoverContext, cover)
+        .focusedValue(\.myModelSheetContext, sheet)
+    }
+}
+```
+
+You can then use `@FocusedValue` to access the currently focused values from a command or the main menu:
+
+```swift
+@FocusedValue(\.myModelAlertContext) var alert
+@FocusedValue(\.myModelCoverContext) var cover
+@FocusedValue(\.myModelSheetContext) var sheet
+```
+
+By using typed focus values, you can inject as many contexts as you like and use each value to access the correct context.
+
+
+
+
 ## Demo Application
 
 The [project repository][Project] has a demo app that lets you explore the library.
