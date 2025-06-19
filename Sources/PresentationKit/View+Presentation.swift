@@ -11,9 +11,44 @@ import SwiftUI
 public extension View {
 
     /// Register a presentation strategy for a certain model.
-    ///
-    /// The view modifier will create and inject new context
-    /// values for the view and repeat it for any new modals.
+    func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View>(
+        for model: Model.Type,
+        alertTitle: LocalizedStringKey,
+        alertActions: @escaping (Model) -> AlertActions,
+        alertMessage: @escaping (Model) -> AlertMessage
+    ) -> some View {
+        self.modifier(
+            PresentationModifier(
+                alertTitle: alertTitle,
+                alertActions: alertActions,
+                alertMessage: alertMessage,
+                coverContent: { _ in EmptyView() },
+                sheetContent: { _ in EmptyView() }
+            )
+        )
+    }
+
+    /// Register a presentation strategy for a certain model,
+    /// with the same view for full screen covers and sheets.
+    func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View, ModalContent: View>(
+        for model: Model.Type,
+        alertTitle: LocalizedStringKey,
+        alertActions: @escaping (Model) -> AlertActions,
+        alertMessage: @escaping (Model) -> AlertMessage,
+        modalContent: @escaping (Model) -> ModalContent
+    ) -> some View {
+        self.modifier(
+            PresentationModifier(
+                alertTitle: alertTitle,
+                alertActions: alertActions,
+                alertMessage: alertMessage,
+                coverContent: modalContent,
+                sheetContent: modalContent
+            )
+        )
+    }
+
+    /// Register a presentation strategy for a certain model.
     func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View, CoverContent: View, SheetContent: View>(
         for model: Model.Type,
         alertTitle: LocalizedStringKey,
@@ -27,6 +62,40 @@ public extension View {
                 alertTitle: alertTitle,
                 alertActions: alertActions,
                 alertMessage: alertMessage,
+                coverContent: coverContent,
+                sheetContent: sheetContent
+            )
+        )
+    }
+
+    /// Register a presentation strategy for a certain model,
+    /// with the same view for full screen covers and sheets.
+    func presentation<Model: Identifiable, ModalContent: View>(
+        for model: Model.Type,
+        modalContent: @escaping (Model) -> ModalContent
+    ) -> some View {
+        self.modifier(
+            PresentationModifier(
+                alertTitle: "",
+                alertActions: { _ in EmptyView() },
+                alertMessage: { _ in EmptyView() },
+                coverContent: modalContent,
+                sheetContent: modalContent
+            )
+        )
+    }
+
+    /// Register a presentation strategy for a certain model.
+    func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View, CoverContent: View, SheetContent: View>(
+        for model: Model.Type,
+        coverContent: @escaping (Model) -> CoverContent,
+        sheetContent: @escaping (Model) -> SheetContent
+    ) -> some View {
+        self.modifier(
+            PresentationModifier(
+                alertTitle: "",
+                alertActions: { _ in EmptyView() },
+                alertMessage: { _ in EmptyView() },
                 coverContent: coverContent,
                 sheetContent: sheetContent
             )
