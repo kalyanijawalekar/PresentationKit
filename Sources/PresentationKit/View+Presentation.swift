@@ -124,8 +124,8 @@ struct PresentationModifier<Model: Identifiable, AlertActions: View, AlertMessag
                     }
                 ),
                 presenting: alertContext.value,
-                actions: { alertContent($0).actions },
-                message: { alertContent($0).message }
+                actions: { alertContent($0).actions() },
+                message: { alertContent($0).message() }
             )
             .fullScreenCover(item: $coverContext.value, content: cover)
             .sheet(item: $sheetContext.value, content: sheet)
@@ -158,4 +158,106 @@ private extension PresentationModifier {
                 sheetContent: sheetContent
             )
     }
+}
+
+
+// MARK: - Preview
+
+private struct Model: Identifiable {
+
+    let id: Int
+}
+
+private struct MyApp: View {
+
+    var body: some View {
+        ContentView()
+            .presentation(
+                for: Model.self,
+                alertContent: { value in
+                    AlertContent(
+                        title: "Alert",
+                        actions: {
+                            Button("OK", action: { print("OK for item #\(value.id)") })
+                            Button("Cancel", role: .cancel, action: {})
+                        },
+                        message: { Text("Alert for item #\(value.id)") }
+                    )
+                },
+                coverContent: {
+                    ModalView(value: $0, title: "Cover")
+                },
+                sheetContent: {
+                    ModalView(value: $0, title: "Sheet")
+                }
+            )
+    }
+}
+
+private struct ContentView: View {
+
+    @Environment(AlertContext<Model>.self) private var alert
+    @Environment(FullScreenCoverContext<Model>.self) private var cover
+    @Environment(SheetContext<Model>.self) private var sheet
+
+    private let value = Model(id: 1)
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Button("Present an alert") {
+                    alert.present(value)
+                }
+                Button("Present a full screen cover") {
+                    cover.present(value)
+                }
+                Button("Present a sheet") {
+                    sheet.present(value)
+                }
+            }
+            .navigationTitle("Demo")
+        }
+    }
+}
+
+private struct ModalView: View {
+
+    let value: Model
+    let title: String
+
+    @Environment(\.dismiss) private var dismiss
+
+    @Environment(AlertContext<Model>.self) private var alert
+    @Environment(FullScreenCoverContext<Model>.self) private var cover
+    @Environment(SheetContext<Model>.self) private var sheet
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Button("Present another alert") {
+                    alert.present(value)
+                }
+                Button("Present another full screen cover") {
+                    cover.present(value)
+                }
+                Button("Present another sheet") {
+                    sheet.present(value)
+                }
+            }
+            .navigationTitle(title)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Dismiss", role: .cancel) {
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+#Preview("Documentation") {
+
+    MyApp()
 }

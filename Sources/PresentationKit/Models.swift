@@ -1,5 +1,5 @@
 //
-//  Contexts.swift
+//  Models.swift
 //  PresentationKit
 //
 //  Created by Daniel Saidi on 2025-06-19.
@@ -41,8 +41,8 @@ public struct AlertContent<Actions: View, Message: View> {
 
     public init(
         title: LocalizedStringKey,
-        actions: Actions,
-        message: Message
+        @ViewBuilder actions: @escaping () -> Actions,
+        @ViewBuilder message: @escaping () -> Message
     ) {
         self.title = title
         self.actions = actions
@@ -50,11 +50,15 @@ public struct AlertContent<Actions: View, Message: View> {
     }
 
     public var title: LocalizedStringKey
-    public var actions: Actions
-    public var message: Message
+    public var actions: () -> Actions
+    public var message: () -> Message
 
     static func empty() -> Self where Actions == EmptyView, Message == EmptyView {
-        .init(title: "", actions: .init(), message: .init())
+        .init(
+            title: "",
+            actions: { EmptyView() },
+            message: { EmptyView() }
+        )
     }
 }
 
