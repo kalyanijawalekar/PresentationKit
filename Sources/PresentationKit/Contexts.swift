@@ -8,50 +8,46 @@
 
 import SwiftUI
 
-/// This type can be used to present alerts.
+/// This protocol is implemented by the various presentation
+/// context types.
 ///
-/// EnvironmentKit will create and inject a context instance
-/// when you apply a `.presentation(for: ...)` view modifier.
+/// The library will create a context instance of every type
+/// and inject it into the view environment when you apply a
+/// `.presentation(for: ...)` view modifier.
+public protocol PresentationContext: AnyObject {
+    associatedtype Model: Identifiable
+
+    var value: Model? { get set }
+}
+
+public extension PresentationContext {
+
+    /// Present the provided value.
+    func present(_ value: Model) {
+        self.value = value
+    }
+}
+
+/// This type can be used to present alerts.
 @Observable
-public class AlertContext<Model: Identifiable> {
+public class AlertContext<Model: Identifiable>: PresentationContext {
 
     /// The value to present.
     public var value: Model?
-
-    /// Present the provided value.
-    public func present(_ value: Model) {
-        self.value = value
-    }
 }
 
 /// This type can be used to present full screen covers.
-///
-/// EnvironmentKit will create and inject a context instance
-/// when you apply a `.presentation(for: ...)` view modifier.
 @Observable
-public class FullScreenCoverContext<Model: Identifiable> {
+public class FullScreenCoverContext<Model: Identifiable>: PresentationContext {
 
     /// The value to present.
     public var value: Model?
-
-    /// Present the provided value.
-    public func present(_ value: Model) {
-        self.value = value
-    }
 }
 
 /// This type can be used to manage sheet presentation state.
-///
-/// EnvironmentKit will create and inject a context instance
-/// when you apply a `.presentation(for: ...)` view modifier.
 @Observable
-public class SheetContext<Model: Identifiable> {
+public class SheetContext<Model: Identifiable>: PresentationContext {
 
     /// The value to present.
     public var value: Model?
-
-    /// Present the provided value.
-    public func present(_ value: Model) {
-        self.value = value
-    }
 }
