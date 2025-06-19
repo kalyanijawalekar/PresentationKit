@@ -13,15 +13,11 @@ public extension View {
     /// Register a presentation strategy for a certain model.
     func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View>(
         for model: Model.Type,
-        alertTitle: LocalizedStringKey,
-        alertActions: @escaping (Model) -> AlertActions,
-        alertMessage: @escaping (Model) -> AlertMessage
+        alertContent: @escaping (Model) -> AlertContent<AlertActions, AlertMessage>
     ) -> some View {
         self.modifier(
             PresentationModifier(
-                alertTitle: alertTitle,
-                alertActions: alertActions,
-                alertMessage: alertMessage,
+                alertContent: alertContent,
                 coverContent: { _ in EmptyView() },
                 sheetContent: { _ in EmptyView() }
             )
@@ -32,16 +28,12 @@ public extension View {
     /// with the same view for full screen covers and sheets.
     func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View, ModalContent: View>(
         for model: Model.Type,
-        alertTitle: LocalizedStringKey,
-        alertActions: @escaping (Model) -> AlertActions,
-        alertMessage: @escaping (Model) -> AlertMessage,
+        alertContent: @escaping (Model) -> AlertContent<AlertActions, AlertMessage>,
         modalContent: @escaping (Model) -> ModalContent
     ) -> some View {
         self.modifier(
             PresentationModifier(
-                alertTitle: alertTitle,
-                alertActions: alertActions,
-                alertMessage: alertMessage,
+                alertContent: alertContent,
                 coverContent: modalContent,
                 sheetContent: modalContent
             )
@@ -51,17 +43,13 @@ public extension View {
     /// Register a presentation strategy for a certain model.
     func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View, CoverContent: View, SheetContent: View>(
         for model: Model.Type,
-        alertTitle: LocalizedStringKey,
-        alertActions: @escaping (Model) -> AlertActions,
-        alertMessage: @escaping (Model) -> AlertMessage,
+        alertContent: @escaping (Model) -> AlertContent<AlertActions, AlertMessage>,
         coverContent: @escaping (Model) -> CoverContent,
         sheetContent: @escaping (Model) -> SheetContent
     ) -> some View {
         self.modifier(
             PresentationModifier(
-                alertTitle: alertTitle,
-                alertActions: alertActions,
-                alertMessage: alertMessage,
+                alertContent: alertContent,
                 coverContent: coverContent,
                 sheetContent: sheetContent
             )
@@ -76,9 +64,7 @@ public extension View {
     ) -> some View {
         self.modifier(
             PresentationModifier(
-                alertTitle: "",
-                alertActions: { _ in EmptyView() },
-                alertMessage: { _ in EmptyView() },
+                alertContent: { _ in AlertContent.empty() },
                 coverContent: modalContent,
                 sheetContent: modalContent
             )
@@ -86,16 +72,14 @@ public extension View {
     }
 
     /// Register a presentation strategy for a certain model.
-    func presentation<Model: Identifiable, AlertActions: View, AlertMessage: View, CoverContent: View, SheetContent: View>(
+    func presentation<Model: Identifiable, CoverContent: View, SheetContent: View>(
         for model: Model.Type,
         coverContent: @escaping (Model) -> CoverContent,
         sheetContent: @escaping (Model) -> SheetContent
     ) -> some View {
         self.modifier(
             PresentationModifier(
-                alertTitle: "",
-                alertActions: { _ in EmptyView() },
-                alertMessage: { _ in EmptyView() },
+                alertContent: { _ in AlertContent.empty() },
                 coverContent: coverContent,
                 sheetContent: sheetContent
             )
@@ -106,22 +90,16 @@ public extension View {
 struct PresentationModifier<Model: Identifiable, AlertActions: View, AlertMessage: View, CoverContent: View, SheetContent: View>: ViewModifier {
 
     init(
-        alertTitle: LocalizedStringKey,
-        alertActions: @escaping (Model) -> AlertActions,
-        alertMessage: @escaping (Model) -> AlertMessage,
+        alertContent: @escaping (Model) -> AlertContent<AlertActions, AlertMessage>,
         coverContent: @escaping (Model) -> CoverContent,
         sheetContent: @escaping (Model) -> SheetContent
     ) {
-        self.alertTitle = alertTitle
-        self.alertActions = alertActions
-        self.alertMessage = alertMessage
+        self.alertContent = alertContent
         self.coverContent = coverContent
         self.sheetContent = sheetContent
     }
 
-    let alertTitle: LocalizedStringKey
-    let alertActions: (Model) -> AlertActions
-    let alertMessage: (Model) -> AlertMessage
+    let alertContent: (Model) -> AlertContent<AlertActions, AlertMessage>
     let coverContent: (Model) -> CoverContent
     let sheetContent: (Model) -> SheetContent
 
@@ -146,8 +124,8 @@ struct PresentationModifier<Model: Identifiable, AlertActions: View, AlertMessag
                     }
                 ),
                 presenting: alertContext.value,
-                actions: alertActions,
-                message: alertMessage
+                actions: { alertContent($0).actions },
+                message: { alertContent($0).message }
             )
             .fullScreenCover(item: $coverContext.value, content: cover)
             .sheet(item: $sheetContext.value, content: sheet)
@@ -156,13 +134,16 @@ struct PresentationModifier<Model: Identifiable, AlertActions: View, AlertMessag
 
 private extension PresentationModifier {
 
+    var alertTitle: LocalizedStringKey {
+        guard let val = alertContext.value else { return "" }
+        return alertContent(val).title
+    }
+
     func cover(for value: Model) -> some View {
         coverContent(value)
             .presentation(
                 for: Model.self,
-                alertTitle: alertTitle,
-                alertActions: alertActions,
-                alertMessage: alertMessage,
+                alertContent: alertContent,
                 coverContent: coverContent,
                 sheetContent: sheetContent
             )
@@ -172,9 +153,7 @@ private extension PresentationModifier {
         sheetContent(value)
             .presentation(
                 for: Model.self,
-                alertTitle: alertTitle,
-                alertActions: alertActions,
-                alertMessage: alertMessage,
+                alertContent: alertContent,
                 coverContent: coverContent,
                 sheetContent: sheetContent
             )

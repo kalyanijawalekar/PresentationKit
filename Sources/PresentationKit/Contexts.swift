@@ -36,6 +36,28 @@ public class AlertContext<Model: Identifiable>: PresentationContext {
     public var value: Model?
 }
 
+/// This type can be used to define alert content.
+public struct AlertContent<Actions: View, Message: View> {
+
+    public init(
+        title: LocalizedStringKey,
+        actions: Actions,
+        message: Message
+    ) {
+        self.title = title
+        self.actions = actions
+        self.message = message
+    }
+
+    public var title: LocalizedStringKey
+    public var actions: Actions
+    public var message: Message
+
+    static func empty() -> Self where Actions == EmptyView, Message == EmptyView {
+        .init(title: "", actions: .init(), message: .init())
+    }
+}
+
 /// This type can be used to present full screen covers.
 @Observable
 public class FullScreenCoverContext<Model: Identifiable>: PresentationContext {
